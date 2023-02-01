@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 '''
-    Logger script
+    Logger Module
 '''
-import logging
 import re
 from typing import List
 
