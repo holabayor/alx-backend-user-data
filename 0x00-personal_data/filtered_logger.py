@@ -47,6 +47,23 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
     return connector
 
 
+def main():
+    ''' obtain a database connection using get_db and retrieve all rows in the
+        users table and display each row under a filtered format
+    '''
+    db = get_db()
+    cursor = db.cursor()
+    cursor.execute("SELECT * FROM users;")
+    description = [desc[0] for desc in cursor.description]
+    logger = get_logger()
+    for row in cursor:
+        message = "".join([f'{des}={val};'
+                          for des, val in zip(description, row)])
+        logger.info(message)
+    cursor.close()
+    db.close()
+
+
 class RedactingFormatter(logging.Formatter):
     """ Redacting Formatter class
     """
