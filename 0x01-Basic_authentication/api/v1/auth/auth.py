@@ -12,14 +12,23 @@ class Auth:
 
     def require_auth(self, path: str, excluded_paths: List[str]) -> bool:
         '''
-            require auth
+        Returns:
+            True if the path is not in the list of strings excluded_paths
         '''
-        return False
+        if path is None or excluded_paths is None or excluded_paths == []:
+            return True
+        for _path in excluded_paths:
+            if path == _path or path == _path[:-1]:
+                return False
+
+        return True
 
     def authorization_header(self, request=None) -> str:
         '''
             Auth header
         '''
+        if request.get('Authorization') is None:
+            return None
         return None
 
     def current_user(self, request=None) -> TypeVar('User'):
