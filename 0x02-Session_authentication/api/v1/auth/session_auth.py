@@ -30,7 +30,6 @@ class SessionAuth(Auth):
         '''
         if session_id is None or not isinstance(session_id, str):
             return None
-        print(f'The session id is {session_id}')
         return self.user_id_by_session_id.get(session_id)
 
     def current_user(self, request=None) -> TypeVar('User'):
@@ -41,5 +40,7 @@ class SessionAuth(Auth):
         if not session_id:
             return None
         user_id = self.user_id_for_session_id(session_id)
-        print(user_id)
+        if not user_id:
+            return None
+
         return User.get(user_id)
