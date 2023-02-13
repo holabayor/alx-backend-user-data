@@ -56,7 +56,7 @@ def profile_unlogged() -> None:
     response = requests.get(f'{URL}/profile', cookies=cookies)
     print(f'The response is {response}')
     print("The response code is {0}".format(response.status_code))
-    # assert response.status_code == 403
+    assert response.status_code == 403
 
 
 def profile_logged(session_id: str) -> None:
