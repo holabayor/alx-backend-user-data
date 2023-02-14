@@ -6,6 +6,7 @@ from db import DB
 import bcrypt
 from sqlalchemy.orm.exc import NoResultFound
 import uuid
+from user import User
 
 
 def _hash_password(password: str) -> bytes:
@@ -38,7 +39,7 @@ class Auth:
     def __init__(self):
         self._db = DB()
 
-    def register_user(self, email, password):
+    def register_user(self, email: str, password: str) -> User:
         """Register a new user.
 
         Args:
@@ -56,7 +57,7 @@ class Auth:
         else:
             raise ValueError(f'User {email} already exists')
 
-    def valid_login(self, email, password):
+    def valid_login(self, email: str, password: str) -> bool:
         """Check if a user is logged in.
 
         Args:
@@ -73,7 +74,7 @@ class Auth:
         except NoResultFound:
             return False
 
-    def create_session(self, email):
+    def create_session(self, email: str) -> str:
         try:
             user = self._db.find_user_by(email=email)
         except NoResultFound:
@@ -82,14 +83,14 @@ class Auth:
         self._db.update_user(user.id, session_id=session_id)
         return session_id
 
-    def get_user_from_session(self, session_id):
+    def get_user_from_session(self, session_id: str) -> User:
         try:
             user = self._db.find_user_by(session_id=session_id)
         except NoResultFound:
             return None
         return user
 
-    def destroy_session(self, user_id):
+    def destroy_session(self, user_id: int) -> None:
         try:
             user = self._db.find_user_by(id=user_id)
         except NoResultFound:
@@ -97,7 +98,7 @@ class Auth:
         session_id = user.session_id
         self._db.update_user(user_id, session_id=None)
 
-    def get_reset_password_token(self, email):
+    def get_reset_password_token(self, email: str) -> str:
         '''
         Get a reset password token for a user.
 
@@ -115,7 +116,7 @@ class Auth:
         self._db.update_user(user.id, reset_password=token)
         return token
 
-    def update_password(self, reset_token, password):
+    def update_password(self, reset_token: str, password: str) -> None:
         '''
         Update a user's password.
 
