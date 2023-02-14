@@ -60,15 +60,13 @@ def logout() -> str:
     Delete the session cookie and redirect
     '''
     session_id = request.cookies.get('session_id')
-    if session_id:
-        user = AUTH.get_user_from_session_id(session_id)
-        if user:
-            AUTH.destroy_session(user.id)
-            return redirect('/')
-        else:
-            abort(403)
-    else:
+    if not session_id:
         abort(403)
+    user = AUTH.get_user_from_session_id(session_id)
+    if not user:
+        abort(403)
+    AUTH.destroy_session(user.id)
+    return redirect('/')
 
 
 @app.route('/profile', methods=['GET'])
