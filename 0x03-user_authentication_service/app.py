@@ -2,7 +2,6 @@
 '''
 Basic flask application
 '''
-import flask
 from flask import Flask, jsonify, request, abort, redirect
 from auth import Auth
 
