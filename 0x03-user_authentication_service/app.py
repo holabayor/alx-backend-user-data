@@ -28,7 +28,7 @@ def create_user():
     email = data.get("email")
     password = data.get("password")
     try:
-        user = AUTH.register_user(email, password)
+        AUTH.register_user(email, password)
         return jsonify({"email": f"{email}",
                         "message": "user created"})
     except Exception:
@@ -60,17 +60,21 @@ def logout() -> str:
     Delete the session cookie and redirect
     '''
     session_id = request.cookies.get('session_id')
-    if not session_id:
+    print("Log out session with id: %s" % session_id)
+    if session_id:
+        user = AUTH.get_user_from_session_id(session_id)
+        if user:
+            print(user.id)
+            AUTH.destroy_session(user.id)
+            return redirect('/')
+        else:
+            abort(403)
+    else:
         abort(403)
-    user = AUTH.get_user_from_session_id(session_id)
-    if not user:
-        abort(403)
-    AUTH.destroy_session(user.id)
-    return redirect('/')
 
 
 @app.route('/profile', methods=['GET'])
-def profile():
+def profile() -> str:
     '''
     Get the user profile
     '''

@@ -67,7 +67,6 @@ class Auth:
         Returns:
             bool: True if the user is logged in, False otherwise.
         """
-        print("The user email is: %s" % email)
         try:
             user = self._db.find_user_by(email=email)
             return bcrypt.checkpw(password.encode('utf-8'),
@@ -116,6 +115,7 @@ class Auth:
         Args:
             user_id (int): The user ID.
         """
+        print("To delete a session")
         try:
             user = self._db.find_user_by(id=user_id)
         except NoResultFound:
