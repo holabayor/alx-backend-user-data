@@ -72,15 +72,14 @@ def logout():
 
 
 @app.route('/profile', methods=['GET'])
-def get_profile():
+def profile():
     '''
     Get the user profile
     '''
-    print(f'The request is: {request.json()}')
     session_id = request.cookies.get('session_id')
-    print(f'The session_id is %s' % session_id)
+    if not session_id:
+        abort(403)
     user = AUTH.get_user_from_session_id(session_id)
-    print(f'User profile is {user}')
     if user:
         return jsonify({"email": f"{user.email}"}), 200
     else:
