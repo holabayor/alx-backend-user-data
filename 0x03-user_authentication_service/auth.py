@@ -8,11 +8,26 @@ from sqlalchemy.orm.exc import NoResultFound
 import uuid
 
 
-def _hash_password(password):
+def _hash_password(password: str) -> bytes:
+    """
+    Hash a password.
+
+    Args:
+        password (str): The password to hash.
+
+    Returns:
+        bytes: The hashed password.
+    """
     return bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
 
 
-def _generate_uuid():
+def _generate_uuid() -> str:
+    """
+    Generate a UUID.
+
+    Returns:
+        str: The UUID.
+    """
     return str(uuid.uuid4())
 
 
