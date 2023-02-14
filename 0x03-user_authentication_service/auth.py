@@ -4,7 +4,7 @@ Authentication file
 """
 from db import DB
 import bcrypt
-from sqlalchemy.exc import NoResultFound
+from sqlalchemy.orm.exc import NoResultFound
 import uuid
 
 
