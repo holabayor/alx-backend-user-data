@@ -55,7 +55,7 @@ def login():
 
 
 @app.route('/sessions', methods=['DELETE'])
-def logout() -> Response:
+def logout() -> str:
     '''
     Delete the session cookie and redirect
     '''
