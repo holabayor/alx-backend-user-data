@@ -2,7 +2,7 @@
 '''
 Basic flask application
 '''
-from flask import Flask, jsonify, request, abort, redirect
+from flask import Flask, Response, jsonify, request, abort, redirect
 from auth import Auth
 
 
@@ -55,7 +55,7 @@ def login():
 
 
 @app.route('/sessions', methods=['DELETE'])
-def logout():
+def logout() -> Response:
     '''
     Delete the session cookie and redirect
     '''
@@ -64,7 +64,7 @@ def logout():
         user = AUTH.get_user_from_session_id(session_id)
         if user:
             AUTH.destroy_session(user.id)
-            redirect('/')
+            return redirect('/')
         else:
             abort(403)
     else:
