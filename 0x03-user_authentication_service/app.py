@@ -63,7 +63,6 @@ def logout() -> str:
     if session_id:
         user = AUTH.get_user_from_session_id(session_id)
         if user:
-            print(user.id)
             AUTH.destroy_session(user.id)
             return redirect('/')
         else:
