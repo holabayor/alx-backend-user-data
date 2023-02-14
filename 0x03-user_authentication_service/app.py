@@ -60,7 +60,6 @@ def logout() -> str:
     Delete the session cookie and redirect
     '''
     session_id = request.cookies.get('session_id')
-    print("Log out session with id: %s" % session_id)
     if session_id:
         user = AUTH.get_user_from_session_id(session_id)
         if user:
