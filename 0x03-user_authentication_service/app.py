@@ -2,7 +2,7 @@
 '''
 Basic flask application
 '''
-from flask import Flask, Response, jsonify, request, abort, redirect
+from flask import Flask, jsonify, request, abort, redirect
 from auth import Auth
 
 
