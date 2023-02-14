@@ -57,7 +57,7 @@ def login():
 @app.route('/sessions', methods=['DELETE'])
 def logout():
     '''
-    Delete the session cookie
+    Delete the session cookie and redirect
     '''
     session_id = request.cookies.get('session_id')
     if session_id:
@@ -79,7 +79,7 @@ def get_profile():
     print(f'The request is: {request.json()}')
     session_id = request.cookies.get('session_id')
     print(f'The session_id is %s' % session_id)
-    user = AUTH.get_user_from_session(session_id)
+    user = AUTH.get_user_from_session_id(session_id)
     print(f'User profile is {user}')
     if user:
         return jsonify({"email": f"{user.email}"}), 200
@@ -107,7 +107,7 @@ def reset_password():
         reset_token = data.get("reset_token")
         new_password = data.get("new_password")
         try:
-            if reset_token == get_reset_password_token(email):
+            if reset_token == AUTH.get_reset_password_token(email):
                 AUTH.update_password(reset_token, new_password)
                 return jsonify({"email": f"{email}",
                                 "message": "Password updated"}), 200
