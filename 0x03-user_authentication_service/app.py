@@ -108,10 +108,9 @@ def get_reset_password_token() -> str:
         reset_token = data.get("reset_token")
         new_password = data.get("new_password")
         try:
-            if reset_token == AUTH.get_reset_password_token(email):
-                AUTH.update_password(reset_token, new_password)
-                return jsonify({"email": f"{email}",
-                                "message": "Password updated"}), 200
+            AUTH.update_password(reset_token, new_password)
+            return jsonify({"email": f"{email}",
+                            "message": "Password updated"}), 200
         except Exception:
             abort(403)
 
