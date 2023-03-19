@@ -1,1 +1,1 @@
-# ALX Backend User data. 
+# ALX Backend User data
